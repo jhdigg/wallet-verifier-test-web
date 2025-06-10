@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2023 Digg - Agency for Digital Government
+#
+# SPDX-License-Identifier: CC0-1.0
+
+---
+policies:
+  - type: commit
+    spec:
+      dco: true
+      gpg:
+        required: true
+      header:
+        length: 90
+        imperative: true
+        case: lower
+        invalidLastCharacters: .
+      body:
+        required: false
+      conventional:
+        types:
+          [
+            "chore",
+            "ci",
+            "docs",
+            "perf",
+            "refactor",
+            "style",
+            "test",
+            "release",
+          ]
+        scopes: [".*"]
