@@ -11,6 +11,11 @@ services:
         - HTTPS_PROXY=${HTTPS_PROXY}
         - NO_PROXY=${NO_PROXY}
         - NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED:-1}
+        - NEXUS_MAVEN_CENTRAL=${NEXUS_MAVEN_CENTRAL}
+        - NEXUS_MAVEN_PUBLIC=${NEXUS_MAVEN_PUBLIC}
+        - NEXUS_WALTID=${NEXUS_WALTID}
+        - NEXUS_GRADLE=${NEXUS_GRADLE}
+        - NEXUS_GRADLE_PLUGINS=${NEXUS_GRADLE_PLUGINS}
     container_name: eudi-verifier-backend
     hostname: eudi-verifier-backend
     ports:
