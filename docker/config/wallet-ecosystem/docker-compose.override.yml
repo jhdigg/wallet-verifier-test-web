@@ -16,6 +16,9 @@ services:
         - HTTPS_PROXY=${HTTPS_PROXY}
         - NPM_STRICT_SSL=${NPM_STRICT_SSL:-true}
         - NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED:-1}
+    ports: !override
+      - 8105:8005
+      - 9260:9259
 
   wallet-backend-server:
     build:
