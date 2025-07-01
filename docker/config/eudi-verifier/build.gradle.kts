@@ -18,7 +18,7 @@ repositories {
     val nexusMavenCentral = System.getenv("NEXUS_MAVEN_CENTRAL").takeIf { !it.isNullOrEmpty() } ?: "https://repo.maven.apache.org/maven2"
     val nexusMavenPublic = System.getenv("NEXUS_MAVEN_PUBLIC").takeIf { !it.isNullOrEmpty() } ?: "https://repo.maven.apache.org/maven2"
     val nexusWaltId = System.getenv("NEXUS_WALTID").takeIf { !it.isNullOrEmpty() }
-    
+
     maven {
         url = uri(nexusMavenCentral)
         isAllowInsecureProtocol = true
