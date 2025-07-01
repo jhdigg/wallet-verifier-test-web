@@ -52,7 +52,6 @@ RUN echo "NEXUS_GRADLE=$NEXUS_GRADLE" && \
 
 # Build using Nexus repositories configured in init.gradle
 RUN gradle --init-script init.gradle clean bootJar --no-daemon --info \
-    -Dhttp.proxyHost= -Dhttps.proxyHosct= \
     || (echo "Build failed. Gradle output above." && false)
 
 FROM eclipse-temurin:21-jre-alpine
