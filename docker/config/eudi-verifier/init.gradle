@@ -61,12 +61,13 @@ allprojects {
                 url nexusWaltId
                 allowInsecureProtocol = true
             }
-        }
-        // Fallback to direct walt.id if not proxied through Nexus
-        maven {
-            url "https://maven.waltid.dev/releases"
-            mavenContent {
-                releasesOnly()
+        } else {
+            // Fallback to direct walt.id if not proxied through Nexus
+            maven {
+                url "https://maven.waltid.dev/releases"
+                mavenContent {
+                    releasesOnly()
+                }
             }
         }
     }

@@ -32,11 +32,12 @@ repositories {
             url = uri(nexusWaltId)
             isAllowInsecureProtocol = true
         }
-    }
-    maven {
-        url = uri("https://maven.waltid.dev/releases")
-        mavenContent {
-            releasesOnly()
+    } else {
+        maven {
+            url = uri("https://maven.waltid.dev/releases")
+            mavenContent {
+                releasesOnly()
+            }
         }
     }
     mavenLocal()
