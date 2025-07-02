@@ -78,7 +78,12 @@ if [ -f "$DOCKER_DIR/.env" ]; then
   cp "$DOCKER_DIR/.env" "$DOCKER_DIR/wallet-ecosystem/.env"
 fi
 
-node ecosystem.js up -t -d || warn "Some wallet services failed to start, continuing anyway"
+if [ ! -f "wallet-frontend/.env" ]; then
+  log "Copying wallet-frontend template environment configuration..."
+  cp "wallet-frontend/.env.template" "wallet-frontend/.env"
+fi
+
+node ecosystem.js up -d || warn "Some wallet services failed to start, continuing anyway"
 node ecosystem.js init || warn "Initialization had errors, continuing anyway"
 
 # Clone or update EUDI verifier if needed
