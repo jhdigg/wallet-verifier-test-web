@@ -9,14 +9,14 @@ Please find instructions for how to restore Docker elsewhere.
 ### Option 1: Regular Users (No Proxy)
 
 ```bash
-cp .env.example .env
-./scripts/wallet-ecosystem-http.sh
+cp ./docker/.env.example ./docker/.env
+./docker/scripts/wallet-ecosystem-http.sh
 ```
 
 ### Option 2: Corporate Users (Behind Proxy)
 
 ```bash
-cp .env.proxy .env
+cp ./docker/.env.proxy ./docker/.env
 
 # Edit .env to add your proxy URL:
 # HTTP_PROXY=http://your-proxy:8080
@@ -26,10 +26,10 @@ cp .env.proxy .env
 # From Chrome: Settings > Privacy > Security > Manage certificates > Export (choose "Base64-encoded certificate chain")
 # From Firefox: Settings > Privacy & Security > View Certificates > Export (include certificate chain)
 # From command line: openssl s_client -connect proxy.company.com:8080 -showcerts < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > proxy-cert.crt
-cp /path/to/your/proxy-certificate.crt proxy-cert.crt
-cp /path/to/your/proxy-certificate.crt config/eudi-verifier/proxy-cert.crt
+cp /path/to/your/proxy-certificate.crt ./docker/proxy-cert.crt
+cp /path/to/your/proxy-certificate.crt ./docker/config/eudi-verifier/proxy-cert.crt
 
-./scripts/wallet-ecosystem-http.sh
+./docker/scripts/wallet-ecosystem-http.sh
 ```
 
 The `.env` file configures both wallet-ecosystem and EUDI verifier services.
@@ -41,7 +41,7 @@ The `.env` file configures both wallet-ecosystem and EUDI verifier services.
 If you need to build a custom EUDI verifier with modifications:
 
 ```bash
-cd config/eudi-verifier
+cd ./docker/config/eudi-verifier
 cp .env.example .env
 
 # Edit .env to add:
@@ -89,7 +89,7 @@ This builds a custom EUDI verifier that:
 If wallet-frontend fails with permission denied:
 
 ```bash
-chmod -R 777 ./wallet-ecosystem/wallet-frontend/public
+chmod -R 777 ./docker/wallet-ecosystem/wallet-frontend/public
 ```
 
 ### Environment Variables
