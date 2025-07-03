@@ -22,6 +22,7 @@ cp .env.proxy .env
 # From Chrome: Settings > Privacy > Security > Manage certificates > Export (choose "Base64-encoded certificate chain")
 # From Firefox: Settings > Privacy & Security > View Certificates > Export (include certificate chain)
 # From command line: openssl s_client -connect proxy.company.com:8080 -showcerts < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > proxy-cert.crt
+cp /path/to/your/proxy-certificate.crt proxy-cert.crt
 cp /path/to/your/proxy-certificate.crt config/eudi-verifier/proxy-cert.crt
 
 ./scripts/wallet-ecosystem-http.sh
