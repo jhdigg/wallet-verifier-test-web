@@ -2,6 +2,10 @@
 
 ## Quick Start
 
+**Note:** The docker files of this project are not compatible with Podman.
+In order to run the services of this project, you must use Docker.
+Please find instructions for how to restore Docker elsewhere.
+
 ### Option 1: Regular Users (No Proxy)
 
 ```bash
