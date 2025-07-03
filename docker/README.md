@@ -64,6 +64,18 @@ This builds a custom EUDI verifier that:
 - Automatically excludes Nexus domains from proxy
 - Includes modified `SdJwtVcValidator` for HTTP issuer support
 
+### Option 4. Running in WLS on a Digg computer
+
+1. First follow all instructions for [option 2](#option-2-corporate-users-behind-proxy).
+
+2. Update wallet frontend to access backend on localhost:
+
+    ```bash
+    cp ./docker/wallet-ecosystem/wallet-frontend/.env{.template,}
+    sed --in-place 's/wallet-backend-server/localhost/' ./docker/wallet-ecosystem/wallet-frontend/.env
+    docker compose -f docker/wallet-ecosystem/docker-compose.yml restart wallet-frontend
+    ```
+
 ## Access URLs
 
 - Wallet: <http://localhost:3000/>
