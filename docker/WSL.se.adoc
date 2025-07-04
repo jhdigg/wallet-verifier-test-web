@@ -54,6 +54,13 @@ sudo curl \
 
 Obs: Kom ihåg att när du curlar behöver du använda digg-proxyn!
 
+Lägg till din användare till docker-gruppen:
+[source,bash]
+----
+sudo usermod -aG docker $USER
+----
+Obs: För att ändringarna ska slå igenom behöver du öppna ett nytt login-skal.
+
 == Konfigurera Docker med Proxy
 
 Skapa nödvändig katalog:
