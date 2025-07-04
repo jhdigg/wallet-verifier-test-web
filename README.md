@@ -22,6 +22,16 @@ please try changing the owner of those files.
 sudo chown -R $USER:$USER node_modules/ megalinter-reports/
 ```
 
+## Wallet ecosystem
+
+In order to test the verifier with a complete environment
+including a wallet and an issuer, we provide
+[a script that runs the wwWallet ecosystem locally](
+    ./docker/scripts/wallet-ecosystem-http.sh
+).
+Please see [the readme in the docker directory](./docker/README.md)
+for details.
+
 ## Live Development
 
 After starting Docker (see above), run:
