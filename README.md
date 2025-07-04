@@ -15,6 +15,13 @@ docker compose  -f ./docker/docker-compose.yml up -d
 
 Then open [http://localhost:3002](http://localhost:3002) in your browser.
 
+**Note:** If you see file access errors when running the `npm` commands,
+please try changing the owner of those files.
+
+```bash
+sudo chown -R $USER:$USER node_modules/ megalinter-reports/
+```
+
 ## Live Development
 
 After starting Docker (see above), run:
