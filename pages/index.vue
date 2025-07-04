@@ -6,7 +6,7 @@
           Strumpsorteringscentralen
         </h1>
       </div>
-      
+
       <div class="bg-white rounded-xl shadow-xl p-10 mb-8 border border-gray-100">
         <div class="text-center mb-8">
           <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mb-4 shadow-lg">
@@ -17,7 +17,7 @@
           <h2 class="text-2xl font-semibold text-gray-800 mb-2">Välkommen</h2>
           <p class="text-gray-600 max-w-md mx-auto">Använd din digitala plånbok för att komma åt dina tjänster.</p>
         </div>
-        
+
         <div class="flex justify-center">
           <NuxtLink to="/verify" class="group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-200">
             <span class="relative">Logga in med din digitala plånbok</span>
@@ -27,7 +27,7 @@
           </NuxtLink>
         </div>
       </div>
-      
+
       <div class="grid md:grid-cols-2 gap-6 mb-8">
         <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
           <div class="flex items-start space-x-4">
@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="bg-white/80 backdrop-blur rounded-lg shadow-sm p-4 text-center">
         <div class="flex items-center justify-center space-x-2 text-sm">
           <div :class="status.online ? 'bg-green-500' : 'bg-red-500'" class="w-2 h-2 rounded-full animate-pulse"></div>
