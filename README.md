@@ -13,7 +13,7 @@ npm run generate
 docker compose  -f ./docker/docker-compose.yml up -d
 ```
 
-Then open [http://localhost](http://localhost) in your browser.
+Then open [http://localhost:3002](http://localhost:3002) in your browser.
 
 ## Live Development
 
@@ -23,4 +23,4 @@ After starting Docker (see above), run:
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
+Visit [http://localhost:3002](http://localhost:3002) in your browser.
