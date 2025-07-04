@@ -66,7 +66,7 @@
         <div class="flex items-center justify-center space-x-2 text-sm">
           <div :class="status.online ? 'bg-green-500' : 'bg-red-500'" class="w-2 h-2 rounded-full animate-pulse"></div>
           <span class="text-gray-600">Status:</span>
-          <span :class="status.online ? 'text-green-600' : 'text-red-600'" class="font-medium">
+          <span :class="status.online ? 'text-green-600' : 'text-red-600'" class="status-value font-medium">
             {{ status.online ? 'OK' : 'Offline' }}
           </span>
         </div>
