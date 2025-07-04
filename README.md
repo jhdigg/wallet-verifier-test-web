@@ -41,3 +41,9 @@ npm run dev
 ```
 
 Visit [http://localhost:3002](http://localhost:3002) in your browser.
+
+**Note:** If you ran the docker compose command [above](#run-with-docker)
+or bootstrapped your you development environment using
+[the Wallet ecosystem script](./docker/scripts/wallet-ecosystem-http.sh),
+there will probably already be a service running on port 3002.
+Pay attention to the build output for the actual port used.
