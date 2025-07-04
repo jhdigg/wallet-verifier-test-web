@@ -47,3 +47,11 @@ or bootstrapped your you development environment using
 [the Wallet ecosystem script](./docker/scripts/wallet-ecosystem-http.sh),
 there will probably already be a service running on port 3002.
 Pay attention to the build output for the actual port used.
+
+**Note:** If you are running the environment in WSL
+but access the frontends using a web browser directly on your Windows host,
+you may need to modify the location of the backend.
+
+```bash
+env HOST_API=http://localhost:8080 npm run dev
+```
