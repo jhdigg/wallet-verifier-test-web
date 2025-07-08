@@ -13,7 +13,24 @@ npm run generate
 docker compose  -f ./docker/docker-compose.yml up -d
 ```
 
-Then open [http://localhost](http://localhost) in your browser.
+Then open [http://localhost:3002](http://localhost:3002) in your browser.
+
+**Note:** If you see file access errors when running the `npm` commands,
+please try changing the owner of those files.
+
+```bash
+sudo chown -R $USER:$USER node_modules/ megalinter-reports/
+```
+
+## Wallet ecosystem
+
+In order to test the verifier with a complete environment
+including a wallet and an issuer, we provide
+[a script that runs the wwWallet ecosystem locally](
+    ./docker/scripts/wallet-ecosystem-http.sh
+).
+Please see [the readme in the docker directory](./docker/README.md)
+for details.
 
 ## Live Development
 
@@ -23,4 +40,18 @@ After starting Docker (see above), run:
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
+Visit [http://localhost:3002](http://localhost:3002) in your browser.
+
+**Note:** If you ran the docker compose command [above](#run-with-docker)
+or bootstrapped your you development environment using
+[the Wallet ecosystem script](./docker/scripts/wallet-ecosystem-http.sh),
+there will probably already be a service running on port 3002.
+Pay attention to the build output for the actual port used.
+
+**Note:** If you are running the environment in WSL
+but access the frontends using a web browser directly on your Windows host,
+you may need to modify the location of the backend.
+
+```bash
+env HOST_API=http://localhost:8080 npm run dev
+```
