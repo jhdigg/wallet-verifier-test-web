@@ -9,6 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest",
+    "test:once": "vitest run",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test"
   },
