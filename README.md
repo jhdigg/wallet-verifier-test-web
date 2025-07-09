@@ -55,3 +55,21 @@ you may need to modify the location of the backend.
 ```bash
 env HOST_API=http://localhost:8080 npm run dev
 ```
+
+## Running tests
+
+To run the automated test suite, run:
+
+```bash
+npm run test
+```
+
+**Note:** On a development machine,
+the above will start the tests in watch mode.
+That is, the tests will rerun automatically on any file change.
+
+To run the test suite only once, run:
+
+```bash
+npm run test:once
+```
