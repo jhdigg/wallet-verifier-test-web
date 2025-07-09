@@ -25,7 +25,11 @@ RUN echo "NODE_EXTRA_CA_CERTS=$NODE_EXTRA_CA_CERTS"
 
 RUN npm ci
 
-COPY . .
+COPY layouts layouts
+COPY pages pages
+COPY public public
+COPY server server
+COPY app.vue nuxt.config.ts tsconfig.json ./
 
 ENV HOST_API=http://eudi-verifier
 RUN npm run build
