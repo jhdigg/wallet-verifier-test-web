@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { config, mount } from "@vue/test-utils";
+import { config, flushPromises, mount } from "@vue/test-utils";
 import Index from "../pages/index.vue";
 
 describe("Index", () => {
@@ -13,14 +13,36 @@ describe("Index", () => {
     expect(wrapper.find(".status-value").text()).toBe("Offline");
   });
 
-  it("calls the API on mount", () => {
-    vi.spyOn(global, "$fetch").mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ data: "test" }),
-    } as Response);
+  it("calls the verifier status API on mount", () => {
+    vi.spyOn(global, "$fetch");
 
     mount(Index);
 
     expect(global.$fetch).toHaveBeenCalledWith("/api/verifier-status");
+  });
+
+  it.each([
+    ["OK", "online"],
+    ["Offline", "offline"],
+    ["Offline", "unknown"],
+  ])(
+    "displays '%s' when fetched '%s' from the verifier status API",
+    async (expectedDisplay, receivedStatus) => {
+      vi.spyOn(global, "$fetch").mockResolvedValue({ status: receivedStatus });
+      const wrapper = mount(Index);
+
+      await flushPromises();
+
+      expect(wrapper.find(".status-value").text()).toBe(expectedDisplay);
+    },
+  );
+
+  it("displays 'offline' when failed to fetch from the verifier status API", async () => {
+    vi.spyOn(global, "$fetch").mockRejectedValue({});
+    const wrapper = mount(Index);
+
+    await flushPromises();
+
+    expect(wrapper.find(".status-value").text()).toBe("Offline");
   });
 });
