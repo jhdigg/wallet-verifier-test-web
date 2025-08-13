@@ -51,6 +51,7 @@ lint_and_format() {
   docker run --rm --volume "$(pwd)":/repo \
     -e MEGALINTER_CONFIG='development/megalinter.yml' \
     -e DEFAULT_WORKSPACE=${MEGALINTER_DEF_WORKSPACE} \
+    -e SKIP_LINTER_OUTPUT_SANITIZATION="${MEGALINTER_SKIP_LINTER_OUTPUT_SANITIZATION}" \
     -e LOG_LEVEL=INFO \
     ghcr.io/oxsecurity/megalinter-javascript:v8.7.0
   store_exit_code "$?" "Lint" \
