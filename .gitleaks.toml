@@ -7,3 +7,7 @@ description = "Digg internal host names"
 regex = '''([a-zA-Z0-9]+\.)*digg\.se'''
 keywords = ["digg"]
 tags = ["DIGG"]
+
+[[rules.allowlists]]
+regexTarget = "line"
+regexes = ['''ospo\@digg\.se''']
