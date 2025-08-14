@@ -12,7 +12,7 @@ paths = [
 [[rules]]
 id = "digg-internal-hosts"
 description = "Digg internal host names"
-regex = '''([[:word:]\-]+\.)*digg\.se'''
+regex = '''([[:word:]\-\.]+)*digg([[:word:]\-\.]+)*\.se'''
 keywords = ["digg"]
 tags = ["DIGG"]
 
@@ -22,6 +22,6 @@ paths = ["docker/WSL.se.adoc"]
 [[rules]]
 id = "digg-email-address"
 description = "Digg email address"
-regex = '''([[:word:]\-\.]+)\@([[:word:]\-]+\.)*digg\.se'''
+regex = '''([[:word:]\-\.]+)\@([[:word:]\-\.]+)*digg([[:word:]\-\.]+)*\.se'''
 keywords = ["digg"]
 tags = ["DIGG"]
