@@ -5,6 +5,9 @@ regexes = [
     '''^digg\.se$''',
     '''^ospo\@digg\.se$'''
 ]
+paths = [
+    ".gitleaks-test.txt"
+]
 
 [[rules]]
 id = "digg-internal-hosts"
