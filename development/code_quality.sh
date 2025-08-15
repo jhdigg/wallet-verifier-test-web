@@ -53,7 +53,7 @@ lint_and_format() {
     -e DEFAULT_WORKSPACE=${MEGALINTER_DEF_WORKSPACE} \
     -e SKIP_LINTER_OUTPUT_SANITIZATION="${MEGALINTER_SKIP_LINTER_OUTPUT_SANITIZATION}" \
     -e LOG_LEVEL=INFO \
-    ghcr.io/oxsecurity/megalinter-javascript:v8.7.0
+    ghcr.io/oxsecurity/megalinter-javascript:v8.1.0
   store_exit_code "$?" "Lint" \
     "${MISSING} ${RED}Lint check failed, see logs (std out and/or ./megalinter-reports) and fix problems.${NC}\n" \
     "${GREEN}${CHECKMARK}${CHECKMARK} Lint check passed${NC}\n"
