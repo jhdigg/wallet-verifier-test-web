@@ -6,7 +6,8 @@ regexes = [
     '''^ospo\@digg\.se$'''
 ]
 paths = [
-    ".gitleaks-test.txt"
+    ".gitleaks-test.txt",
+    ".gitleaks-test/"
 ]
 
 [[rules]]
