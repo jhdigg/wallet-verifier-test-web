@@ -12,7 +12,8 @@
     ":semanticCommitTypeAll(chore)",
     "npm:unpublishSafe",
     ":rebaseStalePrs",
-    "mergeConfidence:all-badges"
+    "mergeConfidence:all-badges",
+    ":configMigration"
   ],
   "commitMessageLowerCase": "auto",
   "minimumReleaseAge": "4 days",
