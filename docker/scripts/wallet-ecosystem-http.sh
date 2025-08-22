@@ -66,6 +66,7 @@ fi
 cd "$DOCKER_DIR/wallet-ecosystem"
 log "Starting wallet ecosystem..."
 git reset --hard HEAD && git clean -fd
+git fetch --prune
 # Pin to stable version
 git checkout v0.3.0
 git submodule foreach --recursive 'git reset --hard HEAD && git clean -fd'
