@@ -61,12 +61,12 @@ lint_and_format() {
 }
 
 commit() {
-  local compareToBranch='main'
+  local compareToBranch="${COMMIT_COMPARE_TO_BRANCH:-main}"
   local currentBranch
   currentBranch=$(git branch --show-current)
   print_header 'COMMIT HEALTH (CONFORM)'
 
-  if [[ "$(git rev-list --count ${compareToBranch}..)" == 0 ]]; then
+  if [[ "$(git rev-list --count "${compareToBranch}"..)" == 0 ]]; then
     printf "%s" \
       "${GREEN} No commits found in current branch: ${YELLOW}${currentBranch}${NC}, compared to: ${YELLOW}${compareToBranch}${NC} ${NC}"
     store_exit_code "$?" "Commit" \
