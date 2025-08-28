@@ -1,0 +1,92 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "osvVulnerabilityAlerts": true,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
+  "extends": [
+    "config:best-practices",
+    "security:openssf-scorecard",
+    ":gitSignOff",
+    ":maintainLockFilesWeekly",
+    ":automergePatch",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    "npm:unpublishSafe",
+    ":rebaseStalePrs",
+    "mergeConfidence:all-badges",
+    ":configMigration"
+  ],
+  "commitMessageLowerCase": "auto",
+  "minimumReleaseAge": "4 days",
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "labels": ["security", "dependencies"]
+  },
+  "enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose"],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "addLabels": ["actions"],
+      "pinDigests": true,
+      "groupName": "github actions"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["slsa-framework/slsa-github-generator"],
+      "pinDigests": false
+    },
+    {
+      "description": "Node.js dependencies - Major updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["dependencies", "major-update"]
+    },
+    {
+      "description": "Development dependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "dev dependencies",
+      "addLabels": ["dev-deps"]
+    },
+    {
+      "description": "Core dependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "groupName": "core dependencies",
+      "addLabels": ["core-deps"]
+    },
+    {
+      "description": "Node.js engine",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "matchPackageNames": ["node"],
+      "rangeStrategy": "replace",
+      "labels": ["node-engine"]
+    },
+    {
+      "description": "Vue.js ecosystem",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^vue", "^@vue/", "^nuxt"],
+      "groupName": "vue ecosystem",
+      "addLabels": ["vue", "frontend"]
+    },
+    {
+      "description": "Testing dependencies",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["test", "junit", "vitest", "playwright"],
+      "groupName": "testing dependencies",
+      "addLabels": ["testing"]
+    },
+    {
+      "description": "Docker base images",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "addLabels": ["docker", "infrastructure"]
+    },
+    {
+      "description": "TailwindCSS ecosystem",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["tailwind", "@tailwindcss/"],
+      "groupName": "tailwind ecosystem",
+      "addLabels": ["tailwind", "frontend"]
+    }
+  ]
+}
