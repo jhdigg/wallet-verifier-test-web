@@ -17,6 +17,7 @@ logs
 .DS_Store
 .fleet
 .idea
+.vscode
 .gitleaks.test.toml
 
 # Local env files
