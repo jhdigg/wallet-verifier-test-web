@@ -157,6 +157,8 @@ const credentials = ref(null)
 const error = ref(null)
 const timeLeft = ref(90)
 const polling = ref(null)
+const config = useRuntimeConfig()
+const walletBaseUrl = config.public.walletUrl
 
 const startVerification = async () => {
   state.value = 'initializing'
@@ -175,14 +177,14 @@ const startVerification = async () => {
   try {
     const response = await $fetch('/api/verifier-request', {
       method: 'POST',
-      body: { type: 'vp_token', nonce: "test-frontend-demo", request_uri_method: "get" }
+      body: { type: 'vp_token', request_uri_method: "get" }
     })
     
     transactionId.value = response.transaction_id
     const requestUri = response.request_uri
     const clientId = response.client_id || 'Verifier'
-    
-    authUrl.value = `http://localhost:3000/cb?client_id=${encodeURIComponent(clientId)}&request_uri=${encodeURIComponent(requestUri)}`
+    authUrl.value = `${walletBaseUrl}?client_id=${encodeURIComponent(clientId)}&request_uri=${encodeURIComponent(requestUri)}`
+    console.log(authUrl.value)
     state.value = 'waiting'
     startCountdown()
   } catch (e) {

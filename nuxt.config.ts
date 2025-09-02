@@ -4,12 +4,19 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   devServer: { port: 3002 },
   modules: ["@nuxtjs/tailwindcss"],
+  vite: {
+    esbuild: {
+      drop:
+        process.env.NODE_ENV === "production" ? ["console", "debugger"] : [],
+    },
+  },
   typescript: {
     typeCheck: false,
   },
   runtimeConfig: {
     public: {
       hostApi: process.env.HOST_API || "http://eudi-verifier",
+      walletUrl: process.env.WALLET_URL || "eudi-openid4vp://",
     },
   },
   nitro: {
