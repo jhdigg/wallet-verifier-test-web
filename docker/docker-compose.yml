@@ -69,7 +69,7 @@ services:
         - NODE_OPTIONS=${NODE_OPTIONS}
         - NODE_EXTRA_CA_CERTS=${NODE_EXTRA_CA_CERTS}
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: src/main/docker/Dockerfile.build
     container_name: custom-verifier
     hostname: custom-verifier
     ports:
