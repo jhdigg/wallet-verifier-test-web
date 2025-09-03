@@ -32,7 +32,6 @@ COPY app.vue nuxt.config.ts tsconfig.json ./
 
 ENV HOST_API=http://eudi-verifier
 RUN npm run build
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 RUN npm prune --omit=dev
 
 EXPOSE 3002
