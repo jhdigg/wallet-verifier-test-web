@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
   devServer: { port: 3002 },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-qrcode"],
   vite: {
     esbuild: {
       drop:
@@ -16,7 +16,19 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       hostApi: process.env.HOST_API || "http://eudi-verifier",
-      walletUrl: process.env.WALLET_URL || "eudi-openid4vp://",
+      walletUrl: process.env.WALLET_URL || "openid4vp://",
+    },
+  },
+  qrcode: {
+    options: {
+      variant: {
+        inner: "circle",
+        marker: "rounded",
+        pixel: "rounded",
+      },
+      radius: 1,
+      blackColor: "currentColor",
+      whiteColor: "white",
     },
   },
   nitro: {
@@ -24,11 +36,11 @@ export default defineNuxtConfig({
     host: "0.0.0.0",
     devProxy: {
       "/ui/": {
-        target: "http://eudi-verifier-backend:8080/ui/",
+        target: "https://eudi-verifier-backend.wallet.local/ui/",
         changeOrigin: true,
       },
       "/wallet/": {
-        target: "http://eudi-verifier-backend:8080/wallet/",
+        target: "https://eudi-verifier-backend.wallet.local/wallet/",
         changeOrigin: true,
       },
     },
