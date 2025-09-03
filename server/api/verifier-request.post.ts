@@ -15,25 +15,21 @@ export default defineEventHandler(async (event) => {
 
   try {
     const requestBody = {
+      type: "vp_token",
       dcql_query: {
         credentials: [
           {
-            id: "pid_credential",
+            id: "query_0",
             format: "dc+sd-jwt",
-            meta: { vct: "urn:eudi:pid:1" },
-          },
-        ],
-        credential_sets: [
-          {
-            options: [["pid_credential"]],
-            purpose: "Verify your identity for access to Mina Sidor",
+            meta: {
+              vct_values: ["urn:eudi:pid:1"],
+            },
           },
         ],
       },
-      response_mode: "direct_post",
-      response_uri: `${publicBaseUrl}/api/verifier-callback`,
-      state: randomUUID(),
-      nonce: clientBody.nonce || randomUUID(),
+      nonce: randomUUID(),
+      request_uri_method: "get",
+      response_uri: `${publicBaseUrl}/api/verifier-callback-jwt`,
     };
 
     console.log(
