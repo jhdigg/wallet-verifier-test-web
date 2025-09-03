@@ -31,7 +31,7 @@ else
 fi
 
 # Update keystore with ngrok hostname
-HOSTNAME=$(echo "$NGROK_URL" | sed 's|https://||')
+HOSTNAME=${NGROK_URL#https://}
 log "Updating keystore with hostname: $HOSTNAME"
 
 wget -q "https://github.com/eu-digital-identity-wallet/eudi-srv-web-verifier-endpoint-23220-4-kt/raw/refs/heads/main/src/main/resources/keystore.jks" -O "$KEYSTORE_PATH" || error "Failed to download keystore"
