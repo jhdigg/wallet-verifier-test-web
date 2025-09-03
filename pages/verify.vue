@@ -58,6 +58,17 @@
               </svg>
               <span>Öppna wallet</span>
             </a>
+            <div class="relative mt-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-600">eller skanna QR-koden</span>
+              </div>
+            </div>
+            <div class="mt-6">
+              <Qrcode :value="qrcodeUrl" class="mx-auto border-6 border-white shadow-lg rounded-lg" style="width: 250px; height: 250px;"/>  
+            </div>
           </div>
           <div class="bg-blue-100 rounded-xl p-4 inline-flex items-center space-x-3">
             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,12 +161,14 @@
 </template>
 
 <script setup>
+const TIMELIMIT = 90;
 const state = ref('idle')
 const transactionId = ref(null)
+const qrcodeUrl = ref(null)
 const authUrl = ref(null)
 const credentials = ref(null)
 const error = ref(null)
-const timeLeft = ref(90)
+const timeLeft = ref(TIMELIMIT)
 const polling = ref(null)
 const config = useRuntimeConfig()
 const walletBaseUrl = config.public.walletUrl
@@ -167,6 +180,7 @@ const startVerification = async () => {
   if (window.location.search.includes('demo=true')) {
     state.value = 'waiting'
     authUrl.value = '#demo'
+    qrcodeUrl.value = '#demo'
     setTimeout(() => {
       state.value = 'success'
       credentials.value = { given_name: 'Anna', family_name: 'Andersson', personal_administrative_number: '199001011234' }
@@ -183,6 +197,8 @@ const startVerification = async () => {
     transactionId.value = response.transaction_id
     const requestUri = response.request_uri
     const clientId = response.client_id || 'Verifier'
+    
+    qrcodeUrl.value = `openid4vp://?client_id=${encodeURIComponent(clientId)}&request_uri=${encodeURIComponent(requestUri)}`
     authUrl.value = `${walletBaseUrl}?client_id=${encodeURIComponent(clientId)}&request_uri=${encodeURIComponent(requestUri)}`
     console.log(authUrl.value)
     state.value = 'waiting'
@@ -204,12 +220,12 @@ const startPolling = () => {
         clearInterval(polling.value)
         state.value = 'success'
         credentials.value = result.verifiedCredentials
-        timeLeft.value = 90
+        timeLeft.value = TIMELIMIT
       } else if (result.status === 'error' || result.status === 'expired') {
         clearInterval(polling.value)
         state.value = 'error'
         error.value = result.error || 'Verifieringen kunde inte slutföras'
-        timeLeft.value = 90
+        timeLeft.value = TIMELIMIT
       }
     } catch (e) {
       console.error('Polling error:', e)
@@ -239,9 +255,10 @@ const reset = () => {
   state.value = 'idle'
   transactionId.value = null
   authUrl.value = null
+  qrcodeUrl.value = null
   credentials.value = null
   error.value = null
-  timeLeft.value = 90
+  timeLeft.value = TIMELIMIT
   if (polling.value) {
     clearInterval(polling.value)
     polling.value = null
