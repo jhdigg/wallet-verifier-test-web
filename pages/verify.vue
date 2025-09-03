@@ -52,22 +52,28 @@
             </div>
             <h2 class="text-xl font-semibold text-gray-800 mb-2">Väntar på din plånbok</h2>
             <p class="text-gray-600 mb-6">Öppna din digitala plånbok för att slutföra verifieringen</p>
-            <a :href="authUrl" @click="startPolling" target="_blank" class="group inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-xl hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
-              <span>Öppna wallet</span>
-            </a>
-            <div class="relative mt-6">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-4 bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-600">eller skanna QR-koden</span>
+            <div v-if="flowType === 'same_device'">
+              <a :href="authUrl" @click="startPolling" target="_blank" class="group inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-xl hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+                <span>Öppna wallet</span>
+              </a>
+              <div class="mt-6">
+                <button @click="switchToCrossDevice" class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                  Har du plånboken på en annan enhet?
+                </button>
               </div>
             </div>
-            <div class="mt-6">
-              <Qrcode :value="qrcodeUrl" class="mx-auto border-6 border-white shadow-lg rounded-lg" style="width: 250px; height: 250px;"/>  
+            <div v-else>
+              <div class="mt-6">
+                <Qrcode :value="qrcodeUrl" class="mx-auto border-6 border-white shadow-lg rounded-lg" style="width: 250px; height: 250px;"/>  
+              </div>
+              <div class="mt-6">
+                <button @click="switchToSameDevice" class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                  Har du plånboken på den här enheten?
+                </button>
+              </div>
             </div>
           </div>
           <div class="bg-blue-100 rounded-xl p-4 inline-flex items-center space-x-3">
@@ -170,7 +176,25 @@ const credentials = ref(null)
 const error = ref(null)
 const timeLeft = ref(TIMELIMIT)
 const polling = ref(null)
+const flowType = ref('qr_code')
 const config = useRuntimeConfig()
+const route = useRoute()
+
+onMounted(() => {
+  if (route.query.success) {
+    try {
+      const data = JSON.parse(decodeURIComponent(route.query.data))
+      state.value = 'success'
+      credentials.value = data
+    } catch (e) {
+      state.value = 'error'
+      error.value = 'Failed to load verification data'
+    }
+  } else if (route.query.error) {
+    state.value = 'error'
+    error.value = decodeURIComponent(route.query.error)
+  }
+})
 const walletBaseUrl = config.public.walletUrl
 
 const startVerification = async () => {
@@ -191,7 +215,7 @@ const startVerification = async () => {
   try {
     const response = await $fetch('/api/verifier-request', {
       method: 'POST',
-      body: { type: 'vp_token', request_uri_method: "get" }
+      body: { type: 'vp_token', request_uri_method: "get", flow_type: flowType.value }
     })
     
     transactionId.value = response.transaction_id
@@ -251,6 +275,16 @@ const startCountdown = () => {
   }, 5000)
 }
 
+const switchToSameDevice = async () => {
+  flowType.value = 'same_device'
+  await startVerification()
+}
+
+const switchToCrossDevice = async () => {
+  flowType.value = 'qr_code'  
+  await startVerification()
+}
+
 const reset = () => {
   state.value = 'idle'
   transactionId.value = null
@@ -259,6 +293,7 @@ const reset = () => {
   credentials.value = null
   error.value = null
   timeLeft.value = TIMELIMIT
+  flowType.value = 'qr_code'
   if (polling.value) {
     clearInterval(polling.value)
     polling.value = null
