@@ -7,7 +7,7 @@ This guide outlines core essentials for developing in this project.
 - [Setup and Configuration](#setup-and-configuration)
   - [IDE Setup](#ide-setup)
 - [Development Workflow](#development-workflow)
-  - [Testing and Verification](#testing-format-and-lint)
+  - [Pull Request Workflow](#pull-request-workflow)
 - [Release Process](#the-release-workflow)
   - [CI Release](#ci-release-process)
   - [Local Release](#local-release-process)
@@ -60,5 +60,11 @@ If any checks fail in the CI pipeline:
 5. Verify all checks pass in the updated PR
 
 ## The Release Workflow
+
+### CI Release Process
+
+### Local Release Process
+
+### Troubleshooting
 
 ...
