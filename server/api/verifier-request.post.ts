@@ -11,9 +11,10 @@ export default defineEventHandler(async (event) => {
     process.env.PUBLIC_BASE_URL ||
     process.env.NUXT_PUBLIC_BASE_URL ||
     "https://custom-verifier";
-  const clientBody = await readBody(event);
+  const { flow_type } = await readBody(event);
 
   try {
+    const verifyId = randomUUID();
     const requestBody = {
       type: "vp_token",
       dcql_query: {
@@ -29,8 +30,11 @@ export default defineEventHandler(async (event) => {
       },
       nonce: randomUUID(),
       request_uri_method: "get",
-      response_uri: `${publicBaseUrl}/api/verifier-callback-jwt`,
     };
+
+    if (flow_type === "same_device") {
+      requestBody.wallet_response_redirect_uri_template = `${publicBaseUrl}/api/verifier-status/${verifyId}?response_code={RESPONSE_CODE}`;
+    }
 
     console.log(
       "Sending request to EUDI backend:",
@@ -42,6 +46,11 @@ export default defineEventHandler(async (event) => {
       headers: { "Content-Type": "application/json" },
       body: requestBody,
       ignoreHTTPSErrors: true,
+    });
+
+    const storage = useStorage("memory");
+    await storage.setItem(`verify:${verifyId}`, {
+      transactionId: response.transaction_id,
     });
 
     return response;

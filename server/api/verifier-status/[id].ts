@@ -2,12 +2,50 @@ import { parseVpToken } from "~/server/utils/vpTokenParser";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
-  const transactionId = getRouterParam(event, "id");
+  let transactionId = getRouterParam(event, "id");
+  const query = getQuery(event);
+  const responseCode = query.response_code;
   const hostApi =
     process.env.INTERNAL_HOST_API ||
     process.env.HOST_API ||
     config.public.hostApi ||
     "http://eudi-verifier-backend:8080";
+
+  if (responseCode) {
+    const storage = useStorage("memory");
+    const transactionData = await storage.getItem(`verify:${transactionId}`);
+
+    if (!transactionData) {
+      return sendRedirect(
+        event,
+        "/verify?error=Invalid%20verification%20link",
+        302,
+      );
+    }
+
+    transactionId = transactionData.transactionId;
+
+    try {
+      const response = await $fetch(
+        `${hostApi}/ui/presentations/${transactionId}?response_code=${responseCode}`,
+        {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          ignoreHTTPSErrors: true,
+        },
+      );
+
+      if (response && response.vp_token) {
+        const verifiedData = parseVpToken(response.vp_token);
+        const data = encodeURIComponent(JSON.stringify(verifiedData));
+        return sendRedirect(event, `/verify?success=true&data=${data}`, 302);
+      }
+
+      return sendRedirect(event, "/verify?error=Verification%20pending", 302);
+    } catch (error) {
+      return sendRedirect(event, "/verify?error=Verification%20failed", 302);
+    }
+  }
 
   try {
     const response = await $fetch(
