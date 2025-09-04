@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
     config.public.hostApi ||
     "http://eudi-verifier-backend:8080";
   const baseUrl =
-    process.env.PUBLIC_BASE_URL ||
-    process.env.NUXT_PUBLIC_BASE_URL ||
-    "";
+    process.env.PUBLIC_BASE_URL || process.env.NUXT_PUBLIC_BASE_URL || "";
 
   if (responseCode) {
     const storage = useStorage("memory");
