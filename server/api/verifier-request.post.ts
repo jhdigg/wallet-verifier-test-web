@@ -25,6 +25,17 @@ export default defineEventHandler(async (event) => {
             meta: {
               vct_values: ["urn:eudi:pid:1"],
             },
+            claims: [
+              {
+                path: ["family_name"],
+              },
+              {
+                path: ["given_name"],
+              },
+              {
+                path: ["personal_administrative_number"],
+              },
+            ],
           },
         ],
       },
