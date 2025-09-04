@@ -10,6 +10,10 @@ export default defineEventHandler(async (event) => {
     process.env.HOST_API ||
     config.public.hostApi ||
     "http://eudi-verifier-backend:8080";
+  const baseUrl =
+    process.env.PUBLIC_BASE_URL ||
+    process.env.NUXT_PUBLIC_BASE_URL ||
+    "";
 
   if (responseCode) {
     const storage = useStorage("memory");
@@ -18,7 +22,7 @@ export default defineEventHandler(async (event) => {
     if (!transactionData) {
       return sendRedirect(
         event,
-        "/verify?error=Invalid%20verification%20link",
+        `${baseUrl}/verify?error=Invalid%20verification%20link`,
         302,
       );
     }
@@ -38,12 +42,24 @@ export default defineEventHandler(async (event) => {
       if (response && response.vp_token) {
         const verifiedData = parseVpToken(response.vp_token);
         const data = encodeURIComponent(JSON.stringify(verifiedData));
-        return sendRedirect(event, `/verify?success=true&data=${data}`, 302);
+        return sendRedirect(
+          event,
+          `${baseUrl}/verify?success=true&data=${data}`,
+          302,
+        );
       }
 
-      return sendRedirect(event, "/verify?error=Verification%20pending", 302);
+      return sendRedirect(
+        event,
+        `${baseUrl}/verify?error=Verification%20pending`,
+        302,
+      );
     } catch (error) {
-      return sendRedirect(event, "/verify?error=Verification%20failed", 302);
+      return sendRedirect(
+        event,
+        `${baseUrl}/verify?error=Verification%20failed`,
+        302,
+      );
     }
   }
 
